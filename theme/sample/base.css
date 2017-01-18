@@ -32,49 +32,49 @@ h2 span {
 h3,h4,h5,h6 {
 	font-weight: normal;
 	font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 /****此处bootstrap样式重写开始****/
 
 .row {
-    margin-right: -10px;
-    margin-left: -10px;
+	margin-right: -10px;
+	margin-left: -10px;
 }
 
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9{
-    padding-right:10px;
-    padding-left:10px;
+	padding-right:10px;
+	padding-left:10px;
 }
 
 .carousel-control.left, .carousel-control.right{background: none;}
 
 .thumbnail{
-    border: none;
-    border-radius:0px;
-    padding:0px;
+	border: none;
+	border-radius:0px;
+	padding:0px;
 }
 
 .breadcrumb{border-radius:0px;}
 
 .panel-default{
-    border-radius:0px;
-    box-shadow:none;
-    border:none;
+	border-radius:0px;
+	box-shadow:none;
+	border:none;
 }
 
 
 
 .list-group-item:first-child {
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
 }
 
 .list-group-item:last-child {
-    margin-bottom: 0;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
+	margin-bottom: 0;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
 }
 
 /****此处bootstrap样式重写结束****/
@@ -101,27 +101,27 @@ h3,h4,h5,h6 {
 }
 
 .fs12 {
-    font-size: 12px
+	font-size: 12px
 }
 
 .fs14 {
-    font-size: 14px
+	font-size: 14px
 }
 
 .fs16{
-    font-size: 16px;
+	font-size: 16px;
 }
 
 .fs18{
-    font-size: 18px;
+	font-size: 18px;
 }
 
 .fs20 {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 .fs24{
-    font-size: 24px;
+	font-size: 24px;
 }
 
 
@@ -152,36 +152,33 @@ h3,h4,h5,h6 {
 
 /*顶部搜索*/
 .navbar-form{
-    margin-top: 11px;
+	margin-top: 11px;
 }
 
 .navbar-form .form-control {
-    height: 30px;
-    width: 100px;
-    border-radius: 20px;
-    line-height: 28px;
-    padding: 0 24px 0 12px;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    border-color: #fff;
+	height: 30px;
+	width: 100px;
+	border-radius: 20px;
+	line-height: 28px;
+	padding: 0 24px 0 12px;
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	border-color: #fff;
 }
 
 .navbar-form .form-group {
-    position: relative;
+	position: relative;
 }
 
 .navbar-form .button {
-    position: absolute;
-    right: 2px;
-    top: 6px;
-    border: none;
-    background: none;
+	position: absolute;
+	right: 2px;
+	top: 6px;
+	border: none;
+	background: none;
 }
-
-
-
 
 .appnav {
 	width: 100%;
@@ -210,9 +207,14 @@ h3,h4,h5,h6 {
 	position: relative
 }
 
+.appnav li:hover{
+	background: lightseagreen;
+	color:white;
+}
+
 .appnav .select {
-	background: #dddddd;
-    color:#555555;
+	background: lightseagreen;
+	color:white;
 }
 
 .appnav .hot{
@@ -220,7 +222,7 @@ h3,h4,h5,h6 {
 }
 
 .appnav .select a {
-	color: #999
+	color: white;
 }
 
 .midder {
@@ -250,10 +252,10 @@ h3,h4,h5,h6 {
 }
 
 .footer {
-padding: 30px 0 15px 0;
-background-color: #2a2c31;
-text-align:center;
-color:#999
+	padding: 30px 0 15px 0;
+	background-color: #2a2c31;
+	text-align:center;
+	color:#999
 }
 
 .footer p{}
@@ -660,7 +662,7 @@ color:#999
 .commlist ul li {
 	padding: 8px;
 	border-bottom: dashed 1px #ddd;
-    white-space: nowrap;  overflow: hidden;
+	white-space: nowrap;  overflow: hidden;
 }
 
 .facelist ul, .facelist ul li{list-style: none;margin:0;padding:0;}
@@ -674,16 +676,16 @@ color:#999
 
 
 .facelist .username{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-align: center;
-    padding:5px 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	text-align: center;
+	padding:5px 0;
 }
 
 .facelist .username a{
-    color:#999999;
-    font-size: 14px;
+	color:#999999;
+	font-size: 14px;
 }
 
 .of {
@@ -694,77 +696,77 @@ color:#999
 .feed ul, .feed ul li{list-style: none;margin: 0;padding: 0;}
 
 .feed .mbtl {
-    float: left;
-    margin: 8px 7px 0 0;
-    padding: 0;
-    width: 55px;
+	float: left;
+	margin: 8px 7px 0 0;
+	padding: 0;
+	width: 55px;
 }
 .feed .mbtr {
-    border-bottom: 1px solid #EEEEEE;
-    margin: 5px 0;
-    min-height: 55px;
-    overflow: hidden;
-    padding: 5px 0;
+	border-bottom: 1px solid #EEEEEE;
+	margin: 5px 0;
+	min-height: 55px;
+	overflow: hidden;
+	padding: 5px 0;
 }
 .feed .pl {
-    color: #666666;
-    line-height: 1.5;
+	color: #666666;
+	line-height: 1.5;
 }
 .feed .broadsmr {
-    color: #999999;
-    padding: 5px 24px;
+	color: #999999;
+	padding: 5px 24px;
 }
 .feed .indentrec {
-    color: #333333;
-    line-height: 1.6em;
-    margin-left: 24px;
+	color: #333333;
+	line-height: 1.6em;
+	margin-left: 24px;
 }
 
 .feed .quote {
-    background: url("quotel.gif") no-repeat scroll left 4px transparent;
-    margin: 8px 0 0 26px;
-    overflow: hidden;
-    padding: 0 24px 5px 15px;
-    width: auto;
-    word-wrap: break-word;
+	background: url("quotel.gif") no-repeat scroll left 4px transparent;
+	margin: 8px 0 0 26px;
+	overflow: hidden;
+	padding: 0 24px 5px 15px;
+	width: auto;
+	word-wrap: break-word;
 	line-height:23px;
 
 }
 .feed .quote .inq {
-    background: url("quoter.gif") no-repeat scroll right bottom transparent;
+	background: url("quoter.gif") no-repeat scroll right bottom transparent;
 	color:#999999;
-    display: inline-block;
-    padding-right: 15px;
+	display: inline-block;
+	padding-right: 15px;
 }
 
 .feed .broadimg {
-    border: 1px solid #DDDDDD;
-    float: right;
-    margin-left: 14px;
+	border: 1px solid #DDDDDD;
+	float: right;
+	margin-left: 14px;
 }
 
 .feed .clearfix:after {
-    clear: both;
-    content: ".";
-    display: block;
-    height: 0;
-    visibility: hidden;
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 .feed .indentrec {
-    color: #333333;
-    line-height: 1.6em;
-    margin-left: 24px;
+	color: #333333;
+	line-height: 1.6em;
+	margin-left: 24px;
 }
 .feed .timeline-album {
-    float: left;
-    margin: 8px 12px 8px 0;
+	float: left;
+	margin: 8px 12px 8px 0;
 }
 
 
 /*我的社区*/
 .my{background: #F6F6F6;overflow:hidden;border: 1px solid #E6E6E6;
-    border-radius: 5px;margin-bottom:20px;}
+	border-radius: 5px;margin-bottom:20px;}
 
 .my_left{background: #F6F6F6;}
 
@@ -773,108 +775,108 @@ color:#999
 .my_left .user_info .photo{float:left;}
 .my_left .user_info .info{float: left;margin-left: 8px;}
 .my_left .user_info .info .username{ display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-    height: 18px;
-    margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 88px;
-    word-wrap: normal;}
+	font-size: 14px;
+	font-weight: bold;
+	height: 18px;
+	margin-bottom: 4px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 88px;
+	word-wrap: normal;}
 .my_left .user_info .info .rolename{}
 
 .user-level {
-    background: none repeat scroll 0 0 #009966;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 0 3px;
+	background: none repeat scroll 0 0 #009966;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 0 3px;
 }
 
 .my_left .stats-mod {
-    margin-bottom: 20px;
-    margin-left: 10px;
+	margin-bottom: 20px;
+	margin-left: 10px;
 	overflow: hidden;
 }
 
 .user-stats{list-style: none;margin:0;padding:0;}
 .user-stats li {
-    display: inline;
-    line-height: 15px;
-    list-style: none;margin:0;padding:0;
+	display: inline;
+	line-height: 15px;
+	list-style: none;margin:0;padding:0;
 }
 
 .user-stats a strong {
-    display: block;
+	display: block;
 }
 
 .user-stats a {
-    color: #666666;
-    float: left;
-    padding: 7px 15px 7px 0;
-    text-decoration: none;
+	color: #666666;
+	float: left;
+	padding: 7px 15px 7px 0;
+	text-decoration: none;
 }
 
 .my_left .menu-mod ul, .my_left .menu-mod ul li{list-style: none;margin:0;padding:0;}
 
 .my_left .menu-mod .menus {
-    margin-left: 10px;
-    margin-right: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .my_left .menu-mod .menus li {
-    position: relative;
+	position: relative;
 }
 .my_left .menu-mod .menus li a {
-    color: #555555;
-    display: block;
-    font-size: 14px;
-    height: 35px;
-    line-height: 35px;
-    text-decoration: none;
-    padding-left: 10px;
+	color: #555555;
+	display: block;
+	font-size: 14px;
+	height: 35px;
+	line-height: 35px;
+	text-decoration: none;
+	padding-left: 10px;
 }
 
 .my_left .menu-mod .menus li.active a {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-color: #E9E9E9;
-    border-style: solid;
-    border-width: 1px 1px 1px 1px;
-    border-radius: 5px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-color: #E9E9E9;
+	border-style: solid;
+	border-width: 1px 1px 1px 1px;
+	border-radius: 5px;
 }
 
 .my_left .menu-mod .menus li .feature-icon {
-    margin: 0 8px;
+	margin: 0 8px;
 }
 .my_left .menu-mod .menus li .counter {
-    position: absolute;
-    right: 10px;
-    top: 0;
+	position: absolute;
+	right: 10px;
+	top: 0;
 }
 .badge {
-    background-color: #999999;
-    border-radius: 3px;
-    color: #FFFFFF;
-    display: inline-block;
-    font-size: 11.844px;
-    font-weight: bold;
-    line-height: 14px;
-    padding: 2px 4px;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    vertical-align: baseline;
-    white-space: nowrap;
+	background-color: #999999;
+	border-radius: 3px;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 11.844px;
+	font-weight: bold;
+	line-height: 14px;
+	padding: 2px 4px;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	vertical-align: baseline;
+	white-space: nowrap;
 }
 .badge-warning {
-    background-color: #F89406;
+	background-color: #F89406;
 }
 
 .my_left .divider {
-    background-color: #E5E5E5;
-    border-bottom: 1px solid #FFFFFF;
-    height: 1px;
-    margin: 9px 1px;
-    overflow: hidden;
+	background-color: #E5E5E5;
+	border-bottom: 1px solid #FFFFFF;
+	height: 1px;
+	margin: 9px 1px;
+	overflow: hidden;
 }
 
 .my_right{margin-left:168px;min-height:600px;background:#fff;overflow:hidden;}
@@ -885,13 +887,13 @@ color:#999
 
 
 .carousel-inner>.active a{overflow:hidden;display:block;}
-.carousel-caption{left:0;text-align:right;bottom:0px;padding:0;right:0px;} 
+.carousel-caption{left:0;text-align:right;bottom:0px;padding:0;right:0px;}
 .carousel-caption a{font-size:14px;color:#fff;padding:10px;}
 
 
 
 .page-header {
-    margin: 0px 0 20px;
+	margin: 0px 0 20px;
 }
 
 
