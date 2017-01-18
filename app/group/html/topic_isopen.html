@@ -1,0 +1,37 @@
+{template header}
+
+<div class="container">
+
+
+
+    <ol class="breadcrumb">
+        <li><a href="{SITE_URL}">首页</a></li>
+        <li><a href="{tsUrl('group')}">小组</a></li>
+        <li><a href="{tsUrl('group','show',array('id'=>$strGroup['groupid']))}">{$strGroup['groupname']}</a></li>
+        <li class="active">{$strTopic[title]}</li>
+    </ol>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+
+      <div class="alert alert-info">
+
+          本小组帖子只有小组成员才可以浏览
+
+          <a class="btn btn-success" href="javascript:void('0');" onclick="joinGroup('{$strGroup['groupid']}');">加入小组</a>
+
+      </div>
+
+
+
+</div>
+</div>
+
+
+
+</div>
+{template footer}

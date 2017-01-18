@@ -1,0 +1,122 @@
+{template header}
+<div class="container">
+
+<ol class="breadcrumb">
+  <li><a href="{SITE_URL}">首页</a></li>
+  <li class="active">小组</li>
+</ol>
+
+<div class="row">
+
+<div class="col-md-8">
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+
+<ul class="nav nav-pills">
+  <li role="presentation" {if $cateid==0}class="active"{/if}><a href="{tsUrl('group')}">全部</a></li>
+{loop $arrGroupCate $key $item}
+  <li role="presentation" {if $cateid==$item['cateid']}class="active"{/if}><a href="{tsUrl('group','index',array('cateid'=>$item['cateid']))}">{$item['catename']}</a></li>
+{/loop}
+</ul>
+
+
+
+
+            <div class="row" style="margin-top: 20px;">
+                {loop $arrGroup $key $item}
+                <div class="col-md-6">
+
+                    <div class="sub-item">
+                        <div class="pic">
+                            <a href="{tsUrl('group','show',array('id'=>$item[groupid]))}">
+                                <img class="img-rounded" src="{if $item[photo]}{php echo tsXimg($item['photo'],'group','120','120',$item['path'],1)}{else}{SITE_URL}public/images/group.jpg{/if}" alt="{$item[groupname]}" />
+                            </a>
+
+                        </div>
+                        <div class="info">
+                            <a href="{tsUrl('group','show',array('id'=>$item[groupid]))}">{$item[groupname]}</a>  <font color="#999999">{$item[count_user]}人加入</font>
+                            <p class="content">{$item[groupdesc]}</p>
+                        </div>
+                    </div>
+
+                </div>
+                {/loop}
+            </div>
+
+
+
+
+            <div class="page">{$pageUrl}</div>
+
+
+
+
+</div>
+</div>
+</div>
+
+<div class="col-md-4">
+
+
+{if $TS_APP[iscreate]==0 || $TS_USER[isadmin]==1}
+<a class="btn btn-info btn-block btn-lg" href="{tsUrl('group','create')}">
+<span class="glyphicon glyphicon-plus-sign"></span> 创建小组</a>
+<p></p>
+{/if}
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">热门帖子</div>
+        <div class="panel-body">
+
+            <div class="group_index_right_hottopic">
+
+                <ul>
+                    {loop $arrTopic $key $item}
+                    <li>
+                        <h3><a href="{tsUrl('group','topic',array('id'=>$item['topicid']))}" target="_blank">{$item['title']}</a></h3>
+
+
+                        <div class="info">
+                            <div class="left">来自：<a title="{$item['group']['groupname']}" target="_blank" href="{tsUrl('group','show',array('id'=>$item['groupid']))}">{$item['group']['groupname']}</a>小组</div>
+                            <div class="right">{$item['count_comment']}评论</div>
+                        </div>
+
+                    </li>
+                    {/loop}
+                </ul>
+            </div>
+
+
+</div>
+</div>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">最新创建小组</div>
+        <div class="panel-body">
+            <div class="commlist">
+                <ul>
+                    {loop $arrNewGroup $key $item}
+                   <li>
+                       <a href="{tsUrl('group','show',array('id'=>$item[groupid]))}">{$item[groupname]}</a> ({$item[count_user]}成员)
+                   </li>
+                    {/loop}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+<!--广告位-->
+{php doAction('gobad','300')}
+
+</div>
+</div>
+</div>
+{template footer}

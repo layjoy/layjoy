@@ -1,0 +1,22 @@
+<div class="photoalbumlist panel panel-default">
+<div class="panel-heading">推荐相册
+<small><a href="{tsUrl('photo')}">更多</a></small>
+</div>
+<div class="panel-body">
+
+    <div class="row">
+        {loop $arrAlbum $key $item}
+    <div class="col-xs-6 col-md-2">
+        <a href="{tsUrl('photo','album',array('id'=>$item[albumid]))}" class="thumbnail">
+            <img src="{if $item[albumface] == ''}{SITE_URL}app/photo/skins/default/photo_album.png{else}{php echo tsXimg($item[albumface],'photo',170,'170',$item[path],1)}{/if}" alt="{$item['albumname']}">
+        </a>
+        <p><a href="{tsUrl('photo','album',array('id'=>$item[albumid]))}">{$item['albumname']}</a></p>
+        <p class="c9">{$item['count_photo']} 张图片</p>
+    </div>
+        {/loop}
+    </div>
+
+
+
+</div>
+</div>

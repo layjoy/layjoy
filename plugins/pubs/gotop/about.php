@@ -1,0 +1,1 @@
+<?phpdefined('IN_TS') or die('Access Denied.');return array(    'name' => '回到顶部插件',    'version' => '0.5',    'desc' => '当页面下拉到一定程度后会出现回到顶部按钮',    'url' => 'http://www.thinksaas.cn',    'email' => 'thinksaas@qq.com',    'author' => 'layjoy',    'author_url' => 'http://www.layjoy.space',    'isedit'	=> '0',);

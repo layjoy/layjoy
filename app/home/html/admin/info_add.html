@@ -1,0 +1,49 @@
+{php include template("admin/header");}
+
+<script>window.UEDITOR_HOME_URL = "{SITE_URL}plugins/pubs/ueditor/";</script>
+<script type="text/javascript" charset="utf-8" src="{SITE_URL}plugins/pubs/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="{SITE_URL}plugins/pubs/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="{SITE_URL}plugins/pubs/ueditor/load.js"></script>
+<script type="text/javascript" charset="utf-8" src="{SITE_URL}plugins/pubs/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<!--main-->
+<div class="midder">
+
+{php include template("admin/menu");}
+
+
+<form method="post" action="{SITE_URL}index.php?app=home&ac=admin&mg=info&ts=adddo">
+<table>
+
+<tr>
+<td>InfoKey:</td><td><input style="width:300px;padding:5px;" name="infokey"  /></td>
+</tr>
+
+<tr>
+<td>标题:</td><td><input style="width:300px;padding:5px;" name="title"  /></td>
+</tr>
+
+<tr>
+<td>内容:</td><td>
+
+<textarea id="tseditor" style="width:800px;" name="content"></textarea>
+
+</td>
+</tr>
+
+<tr>
+<td></td><td>
+
+
+<input type="submit" value="提交" />
+
+</td>
+</tr>
+
+</table>
+</form>
+
+
+</div>
+
+{php include template("admin/footer");}

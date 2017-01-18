@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">最新文章</div>
+    <div class="panel-body commlist">
+
+<ul>
+{loop $arrArticle $key $item}
+<li><a href="{tsUrl('article','show',array('id'=>$item['articleid']))}">{$item['title']}</a></li>
+{/loop}
+</ul>
+</div>
+</div>
