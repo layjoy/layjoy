@@ -13,7 +13,10 @@ data class VoiceEntry(
     val timestamp: Long = System.currentTimeMillis(),
     val duration: Long = 0, // 录音时长（毫秒）
     val isLocked: Boolean = false, // 时光胶囊功能
-    val unlockTimestamp: Long? = null
+    val unlockTimestamp: Long? = null,
+    val isFavorite: Boolean = false, // 收藏标记
+    val summary: String = "", // AI 生成的摘要
+    val tags: String = "" // 标签，逗号分隔
 )
 
 enum class Emotion(val displayName: String, val colorHex: String) {

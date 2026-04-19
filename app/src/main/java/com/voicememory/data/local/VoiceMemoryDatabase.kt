@@ -6,7 +6,7 @@ import com.voicememory.data.model.VoiceEntry
 
 @Database(
     entities = [VoiceEntry::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class VoiceMemoryDatabase : RoomDatabase() {
