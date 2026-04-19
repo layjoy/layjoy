@@ -1,0 +1,49 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: ☕ Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
+    
+    - name: 🔧 Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: 🏗️ Build Debug APK
+      run: ./gradlew assembleDebug --stacktrace
+    
+    - name: 📊 Get APK info
+      run: |
+        APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
+        if [ -f "$APK_PATH" ]; then
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+          ls -lh "$APK_PATH"
+        fi
+    
+    - name: 📦 Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: voicememory-debug-apk
+        path: app/build/outputs/apk/debug/*.apk
+        retention-days: 30
+    
+    - name: 🎉 Build Success
+      run: |
+        echo "✅ APK 编译成功！"
+        echo "📱 下载地址: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"

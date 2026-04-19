@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">声音日记</string>
+    <string name="record">录音</string>
+    <string name="stop">停止</string>
+    <string name="pause">暂停</string>
+    <string name="resume">继续</string>
+    <string name="recording">录音中...</string>
+    <string name="paused">已暂停</string>
+    <string name="permission_required">需要录音权限</string>
+</resources>
