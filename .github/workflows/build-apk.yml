@@ -20,7 +20,17 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
+    
+    - name: 📦 Cache Gradle dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+          ~/.android/build-cache
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
     
     - name: 📱 Set up Android SDK
       uses: android-actions/setup-android@v3
@@ -29,7 +39,7 @@ jobs:
       run: chmod +x gradlew
     
     - name: 🏗️ Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      run: ./gradlew assembleDebug --stacktrace --build-cache --parallel --max-workers=2
     
     - name: 📊 Get APK info
       run: |
