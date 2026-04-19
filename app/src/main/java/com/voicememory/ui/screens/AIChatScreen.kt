@@ -267,10 +267,9 @@ private fun ChatInputBar(
             )
             
             FloatingActionButton(
-                onClick = onSend,
+                onClick = { if (text.isNotBlank() && !isLoading) onSend() },
                 modifier = Modifier.size(48.dp),
-                containerColor = Primary,
-                enabled = text.isNotBlank() && !isLoading
+                containerColor = if (text.isNotBlank() && !isLoading) Primary else Primary.copy(alpha = 0.5f)
             ) {
                 Icon(
                     imageVector = Icons.Default.Send,

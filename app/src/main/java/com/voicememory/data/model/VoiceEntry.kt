@@ -1,5 +1,6 @@
 package com.voicememory.data.model
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -20,10 +21,13 @@ data class VoiceEntry(
 )
 
 enum class Emotion(val displayName: String, val colorHex: String) {
-    HAPPY("开心", "#FFD700"),
-    CALM("平静", "#87CEEB"),
-    ANXIOUS("焦虑", "#FF6347"),
-    SAD("悲伤", "#4682B4"),
-    EXCITED("兴奋", "#FF69B4"),
-    NEUTRAL("中性", "#808080")
+    HAPPY("开心", "#FFBF24"),
+    CALM("平静", "#60A5FA"),
+    ANXIOUS("焦虑", "#F87171"),
+    SAD("悲伤", "#818CF8"),
+    EXCITED("兴奋", "#F472B6"),
+    NEUTRAL("中性", "#94A3B8");
+    
+    val color: Color
+        get() = Color(android.graphics.Color.parseColor(colorHex))
 }

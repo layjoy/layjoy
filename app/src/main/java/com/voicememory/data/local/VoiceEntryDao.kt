@@ -15,6 +15,9 @@ interface VoiceEntryDao {
     @Query("SELECT * FROM voice_entries WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
     fun getEntriesByDateRange(startTime: Long, endTime: Long): Flow<List<VoiceEntry>>
     
+    @Query("SELECT * FROM voice_entries WHERE transcription LIKE '%' || :query || '%' OR summary LIKE '%' || :query || '%' OR tags LIKE '%' || :query || '%' ORDER BY timestamp DESC")
+    fun searchEntries(query: String): Flow<List<VoiceEntry>>
+    
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEntry(entry: VoiceEntry): Long
     
