@@ -2,12 +2,14 @@ package com.voicememory.di
 
 import android.content.Context
 import androidx.room.Room
+import com.voicememory.data.local.AIAnalysisDao
 import com.voicememory.data.local.VoiceEntryDao
 import com.voicememory.data.local.VoiceMemoryDatabase
 import com.voicememory.data.repository.VoiceRepositoryImpl
 import com.voicememory.domain.audio.AudioRecorder
 import com.voicememory.domain.audio.IFlyTekSpeechRecognizer
 import com.voicememory.domain.repository.VoiceRepository
+import com.voicememory.domain.ai.SparkAIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +30,9 @@ object AppModule {
             context,
             VoiceMemoryDatabase::class.java,
             "voice_memory_db"
-        ).build()
+        )
+        .addMigrations(VoiceMemoryDatabase.MIGRATION_1_2)
+        .build()
     }
     
     @Provides
@@ -39,8 +43,17 @@ object AppModule {
     
     @Provides
     @Singleton
-    fun provideVoiceRepository(dao: VoiceEntryDao): VoiceRepository {
-        return VoiceRepositoryImpl(dao)
+    fun provideAIAnalysisDao(database: VoiceMemoryDatabase): AIAnalysisDao {
+        return database.aiAnalysisDao()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideVoiceRepository(
+        dao: VoiceEntryDao,
+        aiAnalysisDao: AIAnalysisDao
+    ): VoiceRepository {
+        return VoiceRepositoryImpl(dao, aiAnalysisDao)
     }
     
     @Provides

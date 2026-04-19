@@ -84,28 +84,23 @@ class PlayerViewModel @Inject constructor(
     fun loadEntry(entryId: Long) {
         viewModelScope.launch {
             try {
-                // TODO: 从数据库加载
-                // val entry = repository.getEntryById(entryId)
-                // _uiState.value = _uiState.value.copy(entry = entry, isLoading = false)
+                val entry = repository.getEntryById(entryId)
+                if (entry == null) {
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        error = "录音不存在"
+                    )
+                    return@launch
+                }
                 
-                // 模拟数据
-                val mockEntry = VoiceEntry(
-                    id = entryId,
-                    audioFilePath = "/path/to/audio.m4a",
-                    transcription = "这是一段测试录音的转写文本。今天心情不错，工作进展顺利。",
-                    emotion = com.voicememory.data.model.Emotion.HAPPY,
-                    timestamp = System.currentTimeMillis(),
-                    duration = 120000,
-                    isFavorite = false
-                )
-                _uiState.value = _uiState.value.copy(entry = mockEntry, isLoading = false)
+                _uiState.value = _uiState.value.copy(entry = entry, isLoading = false)
                 
                 // 加载音频
-                player?.setMediaItem(MediaItem.fromUri(mockEntry.audioFilePath))
+                player?.setMediaItem(MediaItem.fromUri(entry.audioFilePath))
                 player?.prepare()
                 
                 // 加载 AI 分析
-                loadAIAnalysis(mockEntry)
+                loadAIAnalysis(entry)
                 
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(
@@ -179,8 +174,7 @@ class PlayerViewModel @Inject constructor(
             _uiState.value.entry?.let { entry ->
                 val updated = entry.copy(isFavorite = !entry.isFavorite)
                 _uiState.value = _uiState.value.copy(entry = updated)
-                // TODO: 更新数据库
-                // repository.updateEntry(updated)
+                repository.updateEntry(updated)
             }
         }
     }
@@ -192,8 +186,15 @@ class PlayerViewModel @Inject constructor(
     fun deleteEntry() {
         viewModelScope.launch {
             _uiState.value.entry?.let { entry ->
-                // TODO: 删除数据库记录和音频文件
-                // repository.deleteEntry(entry)
+                try {
+                    repository.deleteEntry(entry)
+                    // 停止播放
+                    player?.stop()
+                } catch (e: Exception) {
+                    _uiState.value = _uiState.value.copy(
+                        error = "删除失败: ${e.message}"
+                    )
+                }
             }
         }
     }

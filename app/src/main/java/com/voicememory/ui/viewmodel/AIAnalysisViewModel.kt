@@ -96,19 +96,23 @@ class AIAnalysisViewModel @Inject constructor(
         tags: List<String>
     ) {
         viewModelScope.launch {
-            val analysis = AIAnalysis(
-                entryId = entryId,
-                summary = summary,
-                emotionAnalysis = emotion?.let {
-                    "${it.emotion.displayName} (${(it.intensity * 100).toInt()}%)\n原因: ${it.reason}"
-                } ?: "",
-                emotionIntensity = emotion?.intensity ?: 0f,
-                tags = tags,
-                suggestions = emotion?.suggestion ?: ""
-            )
-            
-            // TODO: 保存到数据库
-            // repository.saveAIAnalysis(analysis)
+            try {
+                val analysis = AIAnalysis(
+                    entryId = entryId,
+                    summary = summary,
+                    emotionAnalysis = emotion?.let {
+                        "${it.emotion.displayName} (${(it.intensity * 100).toInt()}%)\n原因: ${it.reason}"
+                    } ?: "",
+                    emotionIntensity = emotion?.intensity ?: 0f,
+                    tags = tags,
+                    suggestions = emotion?.suggestion ?: ""
+                )
+                
+                repository.saveAIAnalysis(analysis)
+            } catch (e: Exception) {
+                // 保存失败不影响 UI 显示
+                e.printStackTrace()
+            }
         }
     }
 }

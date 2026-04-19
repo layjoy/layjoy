@@ -46,21 +46,33 @@ class CalendarViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             
             try {
-                // TODO: 从数据库加载当月数据
-                // val entries = repository.getEntriesForMonth(month)
+                // 计算当月的开始和结束时间
+                val calendar = Calendar.getInstance().apply {
+                    time = month
+                    set(Calendar.DAY_OF_MONTH, 1)
+                    set(Calendar.HOUR_OF_DAY, 0)
+                    set(Calendar.MINUTE, 0)
+                    set(Calendar.SECOND, 0)
+                    set(Calendar.MILLISECOND, 0)
+                }
+                val startTime = calendar.timeInMillis
                 
-                // 模拟数据
-                val mockEntries = generateMockEntries()
-                val daysData = processDaysData(mockEntries)
-                val emotionStats = calculateEmotionStats(mockEntries)
+                calendar.add(Calendar.MONTH, 1)
+                val endTime = calendar.timeInMillis
                 
-                _uiState.value = _uiState.value.copy(
-                    currentMonth = month,
-                    daysData = daysData,
-                    isLoading = false,
-                    totalEntries = mockEntries.size,
-                    emotionStats = emotionStats
-                )
+                // 从数据库加载当月数据
+                repository.getEntriesByDateRange(startTime, endTime).collect { entries ->
+                    val daysData = processDaysData(entries)
+                    val emotionStats = calculateEmotionStats(entries)
+                    
+                    _uiState.value = _uiState.value.copy(
+                        currentMonth = month,
+                        daysData = daysData,
+                        isLoading = false,
+                        totalEntries = entries.size,
+                        emotionStats = emotionStats
+                    )
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }

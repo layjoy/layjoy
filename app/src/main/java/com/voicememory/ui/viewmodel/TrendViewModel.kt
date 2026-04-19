@@ -46,26 +46,29 @@ class TrendViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             
             try {
-                // TODO: 从数据库加载数据
-                // val entries = repository.getEntriesForTimeRange(timeRangeDays)
+                // 计算时间范围
+                val calendar = Calendar.getInstance()
+                val endTime = calendar.timeInMillis
+                calendar.add(Calendar.DAY_OF_MONTH, -_uiState.value.timeRangeDays)
+                val startTime = calendar.timeInMillis
                 
-                // 模拟数据
-                val mockEntries = generateMockEntries(_uiState.value.timeRangeDays)
-                
-                val trendData = processTrendData(mockEntries, _uiState.value.timeRangeDays)
-                val emotionStats = calculateEmotionStats(mockEntries)
-                val insights = generateInsights(mockEntries, emotionStats)
-                val (avgPerDay, mostActiveDay) = calculateActivityStats(mockEntries, _uiState.value.timeRangeDays)
-                
-                _uiState.value = _uiState.value.copy(
-                    trendData = trendData,
-                    emotionStats = emotionStats,
-                    insights = insights,
-                    totalEntries = mockEntries.size,
-                    avgEntriesPerDay = avgPerDay,
-                    mostActiveDay = mostActiveDay,
-                    isLoading = false
-                )
+                // 从数据库加载数据
+                repository.getEntriesByDateRange(startTime, endTime).collect { entries ->
+                    val trendData = processTrendData(entries, _uiState.value.timeRangeDays)
+                    val emotionStats = calculateEmotionStats(entries)
+                    val insights = generateInsights(entries, emotionStats)
+                    val (avgPerDay, mostActiveDay) = calculateActivityStats(entries, _uiState.value.timeRangeDays)
+                    
+                    _uiState.value = _uiState.value.copy(
+                        trendData = trendData,
+                        emotionStats = emotionStats,
+                        insights = insights,
+                        totalEntries = entries.size,
+                        avgEntriesPerDay = avgPerDay,
+                        mostActiveDay = mostActiveDay,
+                        isLoading = false
+                    )
+                }
             } catch (e: Exception) {
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
