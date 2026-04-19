@@ -26,7 +26,9 @@ class VoiceRepositoryImpl @Inject constructor(
     
     override suspend fun deleteEntry(entry: VoiceEntry) = dao.deleteEntry(entry)
     
-    override suspend fun saveAIAnalysis(analysis: AIAnalysis) = aiAnalysisDao.insertAnalysis(analysis)
+    override suspend fun saveAIAnalysis(analysis: AIAnalysis) {
+        aiAnalysisDao.insertAnalysis(analysis)
+    }
     
     override suspend fun getAIAnalysis(entryId: Long): AIAnalysis? = aiAnalysisDao.getAnalysisByEntryId(entryId)
 }

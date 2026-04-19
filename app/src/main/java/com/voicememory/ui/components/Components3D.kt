@@ -6,6 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -140,7 +143,7 @@ fun WaveformVisualizer3D(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = androidx.compose.material.icons.Icons.Default.Mic,
+                imageVector = Icons.Default.Mic,
                 contentDescription = null,
                 modifier = Modifier.size(48.dp),
                 tint = emotionColor
@@ -208,9 +211,9 @@ fun RecordButton3D(
         ) {
             Icon(
                 imageVector = if (isRecording) 
-                    androidx.compose.material.icons.Icons.Default.Stop 
+                    Icons.Default.Stop 
                 else 
-                    androidx.compose.material.icons.Icons.Default.Mic,
+                    Icons.Default.Mic,
                 contentDescription = if (isRecording) "停止录音" else "开始录音",
                 modifier = Modifier.size(32.dp),
                 tint = Color.White
