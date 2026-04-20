@@ -11,6 +11,7 @@ import com.voicememory.ui.components.RecordButton
 import com.voicememory.ui.components.WaveformVisualizer
 import com.voicememory.ui.viewmodel.RecordViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     viewModel: RecordViewModel = hiltViewModel()

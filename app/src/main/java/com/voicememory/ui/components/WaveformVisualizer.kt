@@ -14,7 +14,8 @@ import kotlin.math.sin
 fun WaveformVisualizer(
     isRecording: Boolean,
     amplitude: Float,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF6366F1)
 ) {
     var phase by remember { mutableStateOf(0f) }
     
@@ -50,7 +51,7 @@ fun WaveformVisualizer(
         
         drawPath(
             path = path,
-            color = if (isRecording) Color(0xFF6200EE) else Color.Gray,
+            color = if (isRecording) color else Color.Gray,
             style = Stroke(width = 4f)
         )
     }
