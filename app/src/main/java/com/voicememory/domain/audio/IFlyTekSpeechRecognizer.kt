@@ -122,7 +122,8 @@ class IFlyTekSpeechRecognizer @Inject constructor() {
     }
     
     private fun getAuthUrl(): String {
-        val url = URL(IFlyTekConfig.ASR_URL)
+        // URL 类不支持 wss:// 协议，需要替换为 https:// 来解析
+        val url = URL(IFlyTekConfig.ASR_URL.replace("wss://", "https://"))
         val date = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US).apply {
             timeZone = TimeZone.getTimeZone("GMT")
         }.format(Date())
