@@ -42,24 +42,51 @@ fun TimelineScreen(
 ) {
     val entries by viewModel.entries.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
+    var showSearchBar by remember { mutableStateOf(false) }
+    val context = androidx.compose.ui.platform.LocalContext.current
+    var entryToDelete by remember { mutableStateOf<VoiceEntry?>(null) }
     
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        "时间轴",
-                        fontWeight = FontWeight.Bold
-                    )
+                    if (showSearchBar) {
+                        TextField(
+                            value = searchQuery,
+                            onValueChange = { viewModel.search(it) },
+                            placeholder = { Text("搜索录音...") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent
+                            )
+                        )
+                    } else {
+                        Text(
+                            "时间轴",
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
+                    IconButton(onClick = { 
+                        if (showSearchBar) {
+                            showSearchBar = false
+                            viewModel.search("")
+                        } else {
+                            navController.navigateUp()
+                        }
+                    }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "返回")
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* TODO: 搜索 */ }) {
-                        Icon(Icons.Default.Search, contentDescription = "搜索")
+                    IconButton(onClick = { showSearchBar = !showSearchBar }) {
+                        Icon(
+                            if (showSearchBar) Icons.Default.Close else Icons.Default.Search,
+                            contentDescription = "搜索"
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -94,19 +121,75 @@ fun TimelineScreen(
                             entry = entry,
                             onClick = {
                                 navController.navigate(Screen.Player.createRoute(entry.id))
-                            }
+                            },
+                            onShare = { entryToShare ->
+                                val shareText = buildString {
+                                    appendLine("🎙️ 语音记忆")
+                                    appendLine()
+                                    appendLine("📅 ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()).format(java.util.Date(entryToShare.timestamp))}")
+                                    appendLine("⏱️ ${entryToShare.duration / 1000}秒")
+                                    appendLine("😊 ${entryToShare.emotion.emoji} ${entryToShare.emotion.label}")
+                                    appendLine()
+                                    if (entryToShare.transcription.isNotEmpty()) {
+                                        appendLine("📝 转写内容：")
+                                        appendLine(entryToShare.transcription)
+                                        appendLine()
+                                    }
+                                    if (entryToShare.summary.isNotEmpty()) {
+                                        appendLine("💡 AI摘要：")
+                                        appendLine(entryToShare.summary)
+                                        appendLine()
+                                    }
+                                    if (entryToShare.tags.isNotEmpty()) {
+                                        appendLine("🏷️ 标签：${entryToShare.tags.joinToString(", ")}")
+                                    }
+                                }
+                                
+                                val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                                    type = "text/plain"
+                                    putExtra(android.content.Intent.EXTRA_TEXT, shareText)
+                                }
+                                context.startActivity(android.content.Intent.createChooser(shareIntent, "分享录音"))
+                            },
+                            onDelete = { entryToDelete = it }
                         )
                     }
                 }
             }
         }
     }
+    
+    // 删除确认对话框
+    entryToDelete?.let { entry ->
+        AlertDialog(
+            onDismissRequest = { entryToDelete = null },
+            title = { Text("确认删除") },
+            text = { Text("确定要删除这条录音吗？此操作无法撤销。") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.deleteEntry(entry.id)
+                        entryToDelete = null
+                    }
+                ) {
+                    Text("删除", color = Error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { entryToDelete = null }) {
+                    Text("取消")
+                }
+            }
+        )
+    }
 }
 
 @Composable
 private fun TimelineCard(
     entry: VoiceEntry,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onShare: (VoiceEntry) -> Unit = {},
+    onDelete: (VoiceEntry) -> Unit = {}
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     
@@ -204,7 +287,7 @@ private fun TimelineCard(
                 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     IconButton(
-                        onClick = { /* TODO: 分享 */ },
+                        onClick = { onShare(entry) },
                         modifier = Modifier.size(32.dp)
                     ) {
                         Icon(
@@ -214,7 +297,7 @@ private fun TimelineCard(
                         )
                     }
                     IconButton(
-                        onClick = { /* TODO: 删除 */ },
+                        onClick = { onDelete(entry) },
                         modifier = Modifier.size(32.dp)
                     ) {
                         Icon(

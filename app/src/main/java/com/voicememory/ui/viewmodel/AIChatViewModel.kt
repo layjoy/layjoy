@@ -102,9 +102,10 @@ class AIChatViewModel @Inject constructor(
      */
     private suspend fun getRecentEntriesContext(): List<String> {
         return try {
-            // TODO: 从数据库获取最近 5 条录音的摘要
-            // repository.getRecentEntries(5).map { it.transcription.take(200) }
-            emptyList()
+            repository.getRecentEntries(5).mapNotNull { entry ->
+                entry.summary?.takeIf { it.isNotBlank() } 
+                    ?: entry.transcription.take(200)
+            }
         } catch (e: Exception) {
             emptyList()
         }

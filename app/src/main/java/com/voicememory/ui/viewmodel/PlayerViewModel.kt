@@ -28,6 +28,7 @@ data class PlayerState(
     val currentPosition: Long = 0,
     val duration: Long = 0,
     val playbackSpeed: Float = 1.0f,
+    val isLooping: Boolean = false,
     val error: String? = null
 )
 
@@ -179,8 +180,38 @@ class PlayerViewModel @Inject constructor(
         }
     }
     
-    fun shareEntry() {
-        // TODO: 实现分享功能
+    fun toggleLoop() {
+        val newLoopState = !_uiState.value.isLooping
+        player?.repeatMode = if (newLoopState) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
+        _uiState.value = _uiState.value.copy(isLooping = newLoopState)
+    }
+    
+    fun shareEntry(onShare: (String, String) -> Unit) {
+        _uiState.value.entry?.let { entry ->
+            val shareText = buildString {
+                appendLine("【语音记录分享】")
+                appendLine()
+                appendLine("时间: ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(java.util.Date(entry.timestamp))}")
+                appendLine("时长: ${entry.duration / 1000}秒")
+                appendLine("情绪: ${entry.emotion.name}")
+                appendLine()
+                appendLine("内容:")
+                appendLine(entry.transcription)
+                
+                if (_aiAnalysisState.value.summary.isNotEmpty()) {
+                    appendLine()
+                    appendLine("摘要:")
+                    appendLine(_aiAnalysisState.value.summary)
+                }
+                
+                if (_aiAnalysisState.value.tags.isNotEmpty()) {
+                    appendLine()
+                    appendLine("标签: ${_aiAnalysisState.value.tags.joinToString(", ")}")
+                }
+            }
+            
+            onShare(shareText, entry.audioFilePath)
+        }
     }
     
     fun deleteEntry() {

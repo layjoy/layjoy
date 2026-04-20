@@ -17,6 +17,8 @@ class VoiceRepositoryImpl @Inject constructor(
     
     override suspend fun getEntryById(id: Long): VoiceEntry? = dao.getEntryById(id)
     
+    override suspend fun getRecentEntries(limit: Int): List<VoiceEntry> = dao.getRecentEntries(limit)
+    
     override fun getEntriesByDateRange(startTime: Long, endTime: Long): Flow<List<VoiceEntry>> =
         dao.getEntriesByDateRange(startTime, endTime)
     

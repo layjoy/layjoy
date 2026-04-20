@@ -1,5 +1,6 @@
 package com.voicememory.ui.screens
 
+import android.content.Intent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -15,8 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.voicememory.data.model.VoiceEntry
@@ -25,6 +28,7 @@ import com.voicememory.ui.components.WaveformVisualizer
 import com.voicememory.ui.theme.*
 import com.voicememory.ui.viewmodel.PlayerViewModel
 import kotlinx.coroutines.delay
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,6 +39,7 @@ fun PlayerScreen(
     entryId: Long,
     viewModel: PlayerViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     
     LaunchedEffect(entryId) {
@@ -64,7 +69,32 @@ fun PlayerScreen(
                                 MaterialTheme.colorScheme.onSurface
                         )
                     }
-                    IconButton(onClick = { viewModel.shareEntry() }) {
+                    IconButton(onClick = { 
+                        viewModel.shareEntry { shareText, audioFilePath ->
+                            val sendIntent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                type = "text/plain"
+                                putExtra(Intent.EXTRA_TEXT, shareText)
+                                
+                                // 如果有音频文件，尝试附加
+                                audioFilePath?.let { path ->
+                                    val file = File(path)
+                                    if (file.exists()) {
+                                        val uri = FileProvider.getUriForFile(
+                                            context,
+                                            "${context.packageName}.fileprovider",
+                                            file
+                                        )
+                                        putExtra(Intent.EXTRA_STREAM, uri)
+                                        type = "audio/*"
+                                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    }
+                                }
+                            }
+                            val shareIntent = Intent.createChooser(sendIntent, "分享语音记录")
+                            context.startActivity(shareIntent)
+                        }
+                    }) {
                         Icon(Icons.Default.Share, contentDescription = "分享")
                     }
                     IconButton(onClick = { viewModel.deleteEntry() }) {
@@ -344,14 +374,17 @@ private fun PlaybackControls(
         
         // 循环播放
         IconButton(
-            onClick = { /* TODO */ },
+            onClick = { viewModel.toggleLoop() },
             modifier = Modifier.size(56.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.Repeat,
                 contentDescription = "循环播放",
                 modifier = Modifier.size(28.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (uiState.isLooping) 
+                    MaterialTheme.colorScheme.primary 
+                else 
+                    MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }

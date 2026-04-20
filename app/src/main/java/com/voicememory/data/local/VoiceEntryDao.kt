@@ -12,6 +12,9 @@ interface VoiceEntryDao {
     @Query("SELECT * FROM voice_entries WHERE id = :id")
     suspend fun getEntryById(id: Long): VoiceEntry?
     
+    @Query("SELECT * FROM voice_entries ORDER BY timestamp DESC LIMIT :limit")
+    suspend fun getRecentEntries(limit: Int): List<VoiceEntry>
+    
     @Query("SELECT * FROM voice_entries WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp DESC")
     fun getEntriesByDateRange(startTime: Long, endTime: Long): Flow<List<VoiceEntry>>
     
